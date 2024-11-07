@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label, input, button, .result {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Grade Calculator</h2>
+    <label for="quiz">Quiz Marks (out of 30):</label>
+    <input type="number" id="quiz" required>
+    
+    <label for="sessional">Sessional Marks (out of 50):</label>
+    <input type="number" id="sessional" required>
+    
+    <label for="assignment">Assignment Marks (out of 50):</label>
+    <input type="number" id="assignment" required>
+    
+    <label for="see">SEE Marks (out of 100):</label>
+    <input type="number" id="see" required>
+    
+    <button onclick="calculateGrade()">Calculate Grade</button>
+    
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+function calculateGrade() {
+    const quiz = parseFloat(document.getElementById("quiz").value);
+    const sessional = parseFloat(document.getElementById("sessional").value);
+    const assignment = parseFloat(document.getElementById("assignment").value);
+    const see = parseFloat(document.getElementById("see").value);
+
+    if (isNaN(quiz) || isNaN(sessional) || isNaN(assignment) || isNaN(see)) {
+        document.getElementById("result").innerText = "Please enter all marks.";
+        return;
+    }
+
+    const final_grade = (quiz * (100 / 30) * 0.18) + 
+                        (sessional * (100 / 50) * 0.24) + 
+                        (assignment * (100 / 50) * 0.18) + 
+                        (see * 0.40);
+
+    let letterGrade;
+    if (final_grade >= 90) letterGrade = "O";
+    else if (final_grade >= 80) letterGrade = "A+";
+    else if (final_grade >= 70) letterGrade = "A";
+    else if (final_grade >= 60) letterGrade = "B+";
+    else letterGrade = "Lower Than B+";
+
+    document.getElementById("result").innerText = `Final Marks: ${final_grade.toFixed(2)}\nLetter Grade: ${letterGrade}`;
+}
+</script>
+
+</body>
+</html>
